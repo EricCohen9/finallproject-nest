@@ -1,0 +1,218 @@
+# version: '3.8'
+
+# services:
+
+#   postgres:
+#     image: postgres:latest
+#     container_name: postgres-demo
+#     restart: always
+#     environment:
+#       POSTGRES_USER: 'postgres'
+#       POSTGRES_PASSWORD: 'elchi'
+#       POSTGRES_DB: 'users'
+#     ports:
+#       - "5432:5432"
+#     networks:
+#       - app-network
+#   server: 
+#     container_name: server-demo
+#     build:
+#       context: ./server
+#       dockerfile: Dockerfile
+#     develop:
+#       watch:
+#         - action: rebuild
+#           path: ./server/app/package.json
+#     ports: 
+#       - "8200:8200"
+#     networks:
+#       - app-network
+#     # environment:
+#     #   CONNECTION_STRING: mongodb://localhost:27017/stockManager
+#     #   REDIS_HOST: redis-17818.c135.eu-central-1-1.ec2.cloud.redislabs.com
+#     #   REDIS_PORT: 17818
+#     #   REDIS_PASSWORD: J5U2IHHj7zSIO5fZDNXBtWGqlw4k8iTZ
+#     # volumes:
+#     #   - ./server/app/dist:/server/dist
+#     # depends_on:
+#     #   - redis
+#     #   - mongodb
+
+#   client:
+#     container_name: client-demo
+#     build:
+#       context: ./client
+#       dockerfile: Dockerfile
+#     develop:
+#       watch:
+#       - action: rebuild
+#         path: ./client/app/package.json
+#     ports:
+#       - 8002:5173
+#     tty: true
+#     networks:
+#       - app-network 
+#     volumes:
+#       - type: bind
+#         source: ./client/app/src
+#         target: /client/src
+#     # depends_on:
+#       # - redis
+#       # - mongodb
+#       - server
+
+#   # postgres:
+#   #   image: postgres:latest
+#   #   container_name: postgres-demo
+#   #   restart: always
+#   #   environment:
+#   #   username: 'postgres',
+#   #   password: 'elchi',
+#   #   database: 'users',
+#   #   ports:
+#   #     - "5432:5432"
+#   #   networks:
+#   #     - app-network
+# # # mongodb image
+
+#   # mongodb:
+#   #   container_name: mongodb
+#   #   image: mongo:4.4.27-rc0-focal
+#   #   restart: always
+#   #   ports:
+#   #     - '27017:27017'
+#   #   deploy:
+#   #       replicas: 1
+#   #   networks: 
+#   #     - app-network
+#   #   command: --wiredTigerCacheSizeGB 1.5 
+#   #   volumes:
+#   #     - mongodata:/data/db
+
+# # # redus image
+
+#   # redis:
+#   #   image: redis:latest
+#   #   restart: always
+#   #   networks:
+#   #     - app-network
+#   #   ports:
+#   #     - '6379:6379'
+#   #   command: redis-server --save 20 1 --loglevel warning --requirepass eYVX7EwVmmxKPCDmwMtyKVge8oLd2t81
+#   #   volumes:
+#   #     - cache:/data
+#   #     - ./redis.conf:/mnt/c/Users/"moshe ilan"/Downloads
+  
+
+# networks: 
+#   app-network:
+
+# # volumes:
+# #     cache:
+# #       driver: local
+# #     mongodata:
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:latest
+    container_name: postgres-demo
+    restart: always
+    environment:
+      POSTGRES_USER: 'postgres'
+      POSTGRES_PASSWORD: 'elchi'
+      POSTGRES_DB: 'users'
+    ports:
+      - "5432:5432"
+    networks:
+      - app-network
+    volumes:
+      - pg-data:/var/lib/postgresql/data
+
+  mongo:
+    image: mongo:latest
+    container_name: mongo-demo
+    restart: always
+    environment:
+      # MONGO_INITDB_ROOT_USERNAME: 'root'
+      # MONGO_INITDB_ROOT_PASSWORD: 'localhost'
+      # MONGO_INITDB_DATABASE: 'stockManager'
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: elchi1234
+    ports:
+      - "27017:27017"
+    networks:
+      - app-network
+    volumes:
+      - mongo-data:/data/db
+
+  server: 
+    container_name: server-demo
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    develop:
+      watch:
+        - action: rebuild
+          path: ./server/app/package.json
+    ports: 
+      - "8200:8200"
+    networks:
+      - app-network
+    depends_on:
+      - postgres
+      - mongo
+    environment:
+      POSTGRES_HOST: postgres
+      POSTGRES_PORT: 5432
+      POSTGRES_USER: 'postgres'
+      POSTGRES_PASSWORD: 'elchi'
+      POSTGRES_DB: 'users'
+      # MONGO_HOST: mongo
+      MONGO_PORT: 27017
+      # MONGO_USER: 'localhost'
+      # MONGO_PASSWORD: 'rootpassword'
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: elchi1234
+      MONGO_DB: stockManager
+
+  client:
+    container_name: client-demo
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    develop:
+      watch:
+      - action: rebuild
+        path: ./client/app/package.json
+    ports:
+      - 8002:8002
+    tty: true
+    networks:
+      - app-network 
+    volumes:
+      - type: bind
+        source: ./client/app/src
+        target: /client/src
+    depends_on:
+      - server
+
+  nginx:
+    image: nginx:alpine
+    container_name: nginx-demo
+    ports:
+      - "80:80"
+    depends_on:
+      - client
+    networks:
+      - app-network
+    volumes:
+      - ./nginx.conf:/nginx.conf
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  pg-data:
+  mongo-data:
