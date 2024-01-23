@@ -1,4 +1,4 @@
-export type StayleDivs = {
+export type Button = {
     direction?: string;
     flexwrap?: string;
     top?: string;
@@ -10,4 +10,10 @@ export type StayleDivs = {
     minHeight?:string;
     flexDirection?:string;
     height?:string;
+    fontSize?:string;
+    color?:string;
+    borderRadius?:string;
+    backgroundColor?:string;
+    border?:string;
+    type?:string;
   };

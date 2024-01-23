@@ -12,7 +12,7 @@ const HeaderComponent = styled.header`
   background-color: #333;
   color: #c4bebe;
   padding: 1rem;
-  width: 100%; 
+  width: 100vw; 
   box-sizing: border-box;
 `;
 const SearchBarWrapper = styled.div`
@@ -121,9 +121,9 @@ const handleSearchInputChange = (event:any) => {
               <img
                 src='https://png.pngtree.com/png-clipart/20191121/original/pngtree-user-icon-png-image_5097430.jpg'
                 alt='User Icon'
-                style={{ width: '18px', height: '18px', marginRight: '8px' }}
+                style={{ width: '18px', height: '18px',  }}
               />
-              User Settings
+              {/* User Settings */}
             </UserButton>
           </SearchBarWrapper>
 

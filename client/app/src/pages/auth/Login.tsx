@@ -63,7 +63,6 @@ const Login = () => {
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     console.log(data);
-    // You can handle login logic here
   };
 
   return (

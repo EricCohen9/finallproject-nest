@@ -31,32 +31,6 @@ const staticCardData = [
   { id: 1, title: 'Card 1', description: 'Description for Card 1' },
   { id: 2, title: 'Card 2', description: 'Description for Card 2' },
 ];
-const Container = styled.div`
-  display: flex;
-  height: 80vh;
-  width: 100vw;
-`;
-
-const HomeContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  height: 80vh;
-  width: 100vw;
-`;
-
-const Button = styled.button`
-`;
-
-const CardContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-`;
-const SidebarContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
 
 const Home = () => {
   const [searchInput, setSearchInput] = useState('');
@@ -81,25 +55,20 @@ const Home = () => {
       data: generateRandomData(),
     })),
   };
-  const articles = [
-    { id: 1, title: 'Article 1', content: 'Content for Article 1' },
-    { id: 2, title: 'Article 2', content: 'Content for Article 2' },
-    // Add more articles as needed
-  ];
   return (
-    <MainStayleDiv style={{ display: 'flex', flexDirection: 'column', height: '100vh', width: '100vw' }}> 
+    <MainStayleDiv as="div" flexDirection= 'column' height= '100vh' width='100vw' > 
       <Sidebar></Sidebar>
-    <div style={{ display: 'flex', flexDirection: 'column', height: '100vh', width: '80vw' }}>
+    <MainStayleDiv as="div"  flexDirection= 'column' height='100vh' width= '80vw' >
     <h2 style={{ alignSelf: 'center', justifySelf: 'center' }}>your value </h2>
       <Line options={options} data={filteredData} />
       <button onClick={refreshPage}>Show Different Graph</button>
       <button onClick={handleBuyClick}>Buy</button>
-      <CardContainer>
+      <MainStayleDiv as="div" flexDirection='column' flexwrap='warp' >
         {staticCardData.map((card) => (
           <Card key={card.id} cardData={card} />
         ))}
-      </CardContainer>
-    </div>
+      </MainStayleDiv>
+    </MainStayleDiv>
     </MainStayleDiv>
   );
 };

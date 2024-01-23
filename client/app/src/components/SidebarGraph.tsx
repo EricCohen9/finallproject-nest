@@ -12,9 +12,9 @@ const GraphContainer = styled.div`
 
 const SidebarGraph: React.FC = () => {
   return (
-    <GraphContainer>
+    // <GraphContainer>
       <Bar options={sidebarOptions} data={sidebarData} />
-    </GraphContainer>
+    // </GraphContainer>
   );
 };
 
