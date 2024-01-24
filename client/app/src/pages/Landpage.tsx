@@ -7,6 +7,7 @@ const LandingContainer = styled.div`
   display: flex;
   flex-direction: column;
   width:100%;
+  /* height: 40vh; */
   overflow-x: hidden;
   flex-grow: 1;
   background-color: #f5f5f5;
@@ -32,12 +33,12 @@ const rotate = keyframes`
 `;
 
 const AnimatedCity = styled.img`
-  width: 80%;
-  height: auto;
-  border-radius: 50%;  
+  width: 100vw;
+  height: 91.7vh;
+  /* border-radius: 50%;   */
   aspect-ratio: 1 / 1;
   object-fit: cover; 
-  animation: ${rotate} 20s linear infinite;
+  /* animation: ${rotate} 20s linear infinite; */
 `;
 
 const LandingPage = () => {

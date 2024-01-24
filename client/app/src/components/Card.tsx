@@ -12,10 +12,12 @@ interface CardProps {
 }
 
 const CardContainer = styled.div`
-  border: 1px solid #ccc;
+ border: 1px solid #ccc;
+  border-radius: 30px;
   padding: 10px;
   margin: 10px;
   cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.7);
 `;
 
 const Card: React.FC<CardProps> = ({ cardData }) => {

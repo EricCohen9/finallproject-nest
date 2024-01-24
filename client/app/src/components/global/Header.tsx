@@ -13,6 +13,7 @@ const HeaderComponent = styled.header`
   color: #c4bebe;
   padding: 1rem;
   width: 100vw; 
+  /* height: 10vh; */
   box-sizing: border-box;
 `;
 const SearchBarWrapper = styled.div`

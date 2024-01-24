@@ -6,6 +6,7 @@ import { data, generateRandomData } from '../data/ChartData';
 import { options } from '../data/ChartData';
 import ArticleDetails from '../components/ArticleDetails';
 import MainStayleDiv from "../style/MainStayleDiv";
+import { staticCardData } from '../data/CardDetails';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -27,11 +28,6 @@ ChartJS.register(
   Tooltip,
   Legend
 );
-const staticCardData = [
-  { id: 1, title: 'Card 1', description: 'Description for Card 1' },
-  { id: 2, title: 'Card 2', description: 'Description for Card 2' },
-];
-
 const Home = () => {
   const [searchInput, setSearchInput] = useState('');
   const navigate = useNavigate();
@@ -59,7 +55,7 @@ const Home = () => {
     <MainStayleDiv as="div" flexDirection= 'column' height= '100vh' width='100vw' > 
       <Sidebar></Sidebar>
     <MainStayleDiv as="div"  flexDirection= 'column' height='100vh' width= '80vw' >
-    <h2 style={{ alignSelf: 'center', justifySelf: 'center' }}>your value </h2>
+    <h2 style={{ alignSelf: 'center', justifySelf: 'center' }}>your holding </h2>
       <Line options={options} data={filteredData} />
       <button onClick={refreshPage}>Show Different Graph</button>
       <button onClick={handleBuyClick}>Buy</button>

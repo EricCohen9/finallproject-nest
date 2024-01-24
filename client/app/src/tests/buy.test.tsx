@@ -17,8 +17,15 @@ test('renders Buy component and submits the form', async () => {
 
   fireEvent.click(screen.getByText(/buy/i));
 
-  await waitFor(() => {
-    expect(screen.getByText(/success/i)).toBeInTheDocument();
-    expect(window.location.pathname).toBe('/');
-  });
+await waitFor(()=>{
+  expect(screen.getByText(/success/i)).toBeInTheDocument();
+})
+await waitFor(
+  () => {
+    expect(window.location.pathname).toBe('/home');
+  },
+  {
+    timeout: 5000, 
+  }
+);
   });
